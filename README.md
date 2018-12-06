@@ -1,5 +1,6 @@
 ***
  SCRIPT : **Cloudump**
+ 
     JOB : **Identifying Real IP Of CloudFlare Protected Website.**
 ***
 
@@ -9,11 +10,13 @@
 
 ***
 - **Install Cloudump**:
-       * git clone https://github.com/Oseid/Cloudump.git
-       * cd Cloudump/
-         - pip install mechanize
-         - pip install simplejson
-***
+
+     * git clone https://github.com/Oseid/Cloudump.git
+       
+     * cd Cloudump/
+     
+     - pip install mechanize
+     - pip install simplejson
 
 ***
 - **Usage**:
