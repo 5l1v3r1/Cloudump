@@ -122,6 +122,10 @@ class DumpIP:
                                         print(pu+"===============================\n"+wi)
                                 except Exception, e:
                                      print(rd+"\t\t ["+yl+"!"+rd+"]"+yl+" Something Went Wrong"+rd+" !!!"+wi)
+                        if "No direct-connect IP address was found for this domain." in data:
+                                print(rd+"  ["+yl+"!"+rd+"] "+yl+"Sorry,"+wi+" I Can't Find The Real IP Address Of This Website"+yl+"!"+rd+" :("+wi)
+                         
+                                
                 except KeyboardInterrupt:
                         print(" ")
                         exit(1)
@@ -146,7 +150,7 @@ if len(sys.argv) !=2:
                 exit(1)
 else:
    url = sys.argv[1]
-   if url in ["-h","--help","-hh","?","/?","help"]:
+   if url in ["-h","--help","-hh","?","/?","help","HELP","-H","--HELP","-HH"]:
            print("Usage: python cloudump.py <Website URL>\nEx: python cloudump.py http://www.example.com")
            exit(1)
    else:
