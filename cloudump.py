@@ -43,34 +43,33 @@ class DumpIP:
                         response = urllib2.urlopen(url + str(ip))
                         name = response.read()
                         labs = json.loads(name.decode("utf-8"))
-                        region = labs['regionName']
+                        region = labs['regionName'].encode('ascii','replace')
                         print(rd+"     GeoIP INFO"+gr+":["+wi+str(ip)+gr+"]===:")
                         sleep(0.10)
-                        print(gr + "\t\t IP: " +wi+ labs['query'])
+                        print(gr + "\t\t IP: " +wi+ labs['query'].encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr+ "\t\t Status: " +wi+ labs['status'])
+                        print(gr+ "\t\t Status: " +wi+ labs['status'].encode('ascii','replace'))
                         sleep(0.10)
                         print(gr+ "\t\t Region: "+wi+"{}".format(region))
                         sleep(0.10)
-                        print(gr + "\t\t Country: " +wi+ labs['country'])
+                        print(gr + "\t\t Country: " +wi+ labs['country'].encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr + "\t\t City: " +wi+ labs['city'])
+                        print(gr + "\t\t City: " +wi+ labs['city'].encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr + "\t\t ISP: "+wi + labs['isp'])
+                        print(gr + "\t\t ISP: "+wi + labs['isp'].encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr + "\t\t Lat,Lon: "+wi + str(labs['lat']) + "," + str(labs['lon']))
+                        print(gr + "\t\t Lat,Lon: "+wi + str(labs['lat']).encode('ascii','replace') + "," + str(labs['lon']).encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr + "\t\t ZIPCODE: "+wi + labs['zip'])
+                        print(gr + "\t\t ZIPCODE: "+wi + labs['zip'].encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr + "\t\t TimeZone: " +wi+ labs['timezone'])
+                        print(gr + "\t\t TimeZone: " +wi+ labs['timezone'].encode('ascii','replace'))
                         sleep(0.10)
-                        print(gr + "\t\t AS: " +wi+ labs['as'])
+                        print(gr + "\t\t AS: " +wi+ labs['as'].encode('ascii','replace'))
                         sleep(0.10)
                         print(pu+"===============================\n"+wi)
-                except Exception,e:
-                        print(e)
+                except Exception:
                         print(rd+"\n["+yl+"!"+rd+"]"+yl+" Something Went Wrong"+rd+" !!!"+wi)
-                        print("[!] Pleas Show The GeoIP INFO Of Target In [https://whatismyipaddress.com/ip/{}]".format(ip))
+                        print(wi+"\n["+yl+"!"+wi+"]"+yl+" You Can Show The GeoIP OF Target In [ "+wi+"https://whatismyipaddress.com/ip/"+str(ip)+yl+" ]")
                         exit(1)
 	def dumpIP(self, url):
 		if self.cnet() !=True:
@@ -160,6 +159,7 @@ else:
            exit(1)
    else:
             dumpIP.dumpIP(url)
+
 ##############################################################
 ##################### 		     #########################
 #####################   END OF TOOL  #########################
