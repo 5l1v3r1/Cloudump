@@ -37,6 +37,41 @@ class DumpIP:
 		except socket.error:
 			pass
 		return False
+	def geoIPinfo(self, ip):
+                try:
+                        url = "http://ip-api.com/json/"
+                        response = urllib2.urlopen(url + str(ip))
+                        name = response.read()
+                        labs = json.loads(name.decode("utf-8"))
+                        region = labs['regionName']
+                        print(rd+"     GeoIP INFO"+gr+":["+wi+str(ip)+gr+"]===:")
+                        sleep(0.10)
+                        print(gr + "\t\t IP: " +wi+ labs['query'])
+                        sleep(0.10)
+                        print(gr+ "\t\t Status: " +wi+ labs['status'])
+                        sleep(0.10)
+                        print(gr+ "\t\t Region: "+wi+"{}".format(region))
+                        sleep(0.10)
+                        print(gr + "\t\t Country: " +wi+ labs['country'])
+                        sleep(0.10)
+                        print(gr + "\t\t City: " +wi+ labs['city'])
+                        sleep(0.10)
+                        print(gr + "\t\t ISP: "+wi + labs['isp'])
+                        sleep(0.10)
+                        print(gr + "\t\t Lat,Lon: "+wi + str(labs['lat']) + "," + str(labs['lon']))
+                        sleep(0.10)
+                        print(gr + "\t\t ZIPCODE: "+wi + labs['zip'])
+                        sleep(0.10)
+                        print(gr + "\t\t TimeZone: " +wi+ labs['timezone'])
+                        sleep(0.10)
+                        print(gr + "\t\t AS: " +wi+ labs['as'])
+                        sleep(0.10)
+                        print(pu+"===============================\n"+wi)
+                except Exception,e:
+                        print(e)
+                        print(rd+"\n["+yl+"!"+rd+"]"+yl+" Something Went Wrong"+rd+" !!!"+wi)
+                        print("[!] Pleas Show The GeoIP INFO Of Target In [https://whatismyipaddress.com/ip/{}]".format(ip))
+                        exit(1)
 	def dumpIP(self, url):
 		if self.cnet() !=True:
                         print(rd+"\n["+yl+"!"+rd+"]"+yl+" Error: Please Check Your Internet Connection "+rd+"!!!")
@@ -63,7 +98,6 @@ class DumpIP:
                         except socket.gaierror:
                                 print(rd+"["+yl+"!"+rd+"]"+yl+" Error: Please Check Your URL[ "+rd+url+yl+" ]"+rd+" !!!")
                                 exit(1)
-
                         url = "http://"+url
                 try:
                         print(yl+"\n["+wi+"~"+yl+"]"+gr+" Analysis "+yl+"Website[ "+wi+url+yl+" ]"+rd+"...")
@@ -81,7 +115,10 @@ class DumpIP:
                                 print(rd+"  ["+yl+"!"+rd+"]"+wi+" Please Check Your URL !")
                         if "these are not CloudFlare-user nameservers" in data and "No working nameservers are registered." not in data:
                                 print(rd+"  ["+yl+"!"+rd+"]"+yl+" CloudFlare "+wi+"STATUS: "+rd+" Disabled"+yl+"!")
-                                print(rd+"  ["+yl+"!"+rd+"]"+yl+" Error: This Website Not Using "+rd+"CloudFlare"+yl+" Security"+rd+" !!!"+wi)
+                                print(rd+"  ["+yl+"!"+rd+"]"+yl+" This Website Not Using "+rd+"CloudFlare"+yl+" Security"+rd+" !!!"+wi)
+                                print(wi+"==================================================")
+                                print(gr+"["+wi+"+"+gr+"]"+wi+" IP: "+gr+colIP)
+                                self.geoIPinfo(colIP)
                         if "Sorry, but the domain name must contain one or two dots." in data:
                                 print(rd+"  ["+yl+"!"+rd+"] "+yl+"Sorry,"+wi+" but the domain name must contain one or two dots."+rd+" !!!"+wi)
                         if "A direct-connect IP address was found:" in data:
@@ -91,41 +128,9 @@ class DumpIP:
                                 print(yl+"  ======================"+"="*len(colIP))
                                 print(gr+"  ["+wi+"+"+gr+"]"+wi+" Real IP Is: "+gr+ips[0])
                                 print(yl+"  ================"+"="*len(ips[0]))
-                                try:
-                                        url = "http://ip-api.com/json/"
-                                        response = urllib2.urlopen(url + str(ips[0]))
-                                        name = response.read()
-                                        labs = json.loads(name.decode("utf-8"))
-                                        region = labs['regionName']
-                                        print(rd+"     GeoIP INFO"+gr+":["+wi+str(ips[0])+gr+"]===:")
-                                        sleep(0.10)
-                                        print(gr + "\t\t IP: " +wi+ labs['query'])
-                                        sleep(0.10)
-                                        print(gr+ "\t\t Status: " +wi+ labs['status'])
-                                        sleep(0.10)
-                                        print(gr+ "\t\t Region: "+wi+"{}".format(region))
-                                        sleep(0.10)
-                                        print(gr + "\t\t Country: " +wi+ labs['country'])
-                                        sleep(0.10)
-                                        print(gr + "\t\t City: " +wi+ labs['city'])
-                                        sleep(0.10)
-                                        print(gr + "\t\t ISP: "+wi + labs['isp'])
-                                        sleep(0.10)
-                                        print(gr + "\t\t Lat,Lon: "+wi + str(labs['lat']) + "," + str(labs['lon']))
-                                        sleep(0.10)
-                                        print(gr + "\t\t ZIPCODE: "+wi + labs['zip'])
-                                        sleep(0.10)
-                                        print(gr + "\t\t TimeZone: " +wi+ labs['timezone'])
-                                        sleep(0.10)
-                                        print(gr + "\t\t AS: " +wi+ labs['as'])
-                                        sleep(0.10)
-                                        print(pu+"===============================\n"+wi)
-                                except Exception, e:
-                                     print(rd+"\t\t ["+yl+"!"+rd+"]"+yl+" Something Went Wrong"+rd+" !!!"+wi)
+                                self.geoIPinfo(ips[0])
                         if "No direct-connect IP address was found for this domain." in data:
-                                print(rd+"  ["+yl+"!"+rd+"] "+yl+"Sorry,"+wi+" I Can't Find The Real IP Address Of This Website"+yl+"!"+rd+" :("+wi)
-                         
-                                
+                                print(rd+"  ["+yl+"!"+rd+"] "+yl+"Sorry,"+wi+" I Can't Find The Real IP Address Of This Website"+yl+"!"+rd+" :("+wi)            
                 except KeyboardInterrupt:
                         print(" ")
                         exit(1)
@@ -141,9 +146,9 @@ if len(sys.argv) !=2:
 """)
         print("[*]====> Let's Bypass CloudFlare <====[*]")
         try:
-                url = raw_input("\nSite URL: ")
+                url = raw_input("\n[?] Site URL: ")
                 while url=="" or url is None:
-                        url = raw_input("Site URL: ")
+                        url = raw_input("  [!] Site URL?: ")
                 dumpIP.dumpIP(url)
         except KeyboardInterrupt:
                 print(cy+"\n~"+gr+"GoodBye"+yl+" :)")
