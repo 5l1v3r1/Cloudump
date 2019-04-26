@@ -103,7 +103,7 @@ class DumpIP:
                         br = mechanize.Browser()
                         br.set_handle_robots(False)
                         br.addheaders = [ ('user-agent', "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36" ) ]
-                        br.open("http://www.crimeflare.cc:82/cfs.html")
+                        br.open("http://www.crimeflare.org:82/cfs.html")
                         br.select_form(nr=0)
                         br["cfS"]=url
                         res = br.submit()
